@@ -1,0 +1,14 @@
+{
+  "name": "timemanager",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kazunori.kimura.js@gmail.com",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "connect": "~2.12.0"
+  }
+}

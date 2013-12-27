@@ -1,0 +1,23 @@
+{
+  "name": "timemanager",
+  "version": "0.0.0",
+  "authors": [
+    "kazunori.kimura <kazunori.kimura.js@gmail.com>"
+  ],
+  "description": "SimpleTimeManager",
+  "main": "app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.0.3",
+    "underscore": "~1.5.2",
+    "backbone": "~1.1.0",
+    "bootstrap": "~3.0.3"
+  }
+}
