@@ -1,8 +1,5 @@
-//app.js
+//view.js
 
-var app = {};
-
-//- views
 //-- main view
 var MainView = Backbone.View.extend({
     events: {
@@ -14,7 +11,9 @@ var MainView = Backbone.View.extend({
      * @event MainView#initialize
      */
     initialize: function(){
-        //_.bindAll(this);
+        _.bindAll(this);
+
+        //現在日付を保持する
         this.today = new Date();
         //描画処理を実行
         this.render();
@@ -31,14 +30,10 @@ var MainView = Backbone.View.extend({
         );
     },
     onEdit: function(){
-        var url = _.str.sprintf("edit/%d", this.today.getTime());
-        app.router.navigate(url, {trigger: true});
+        app.router.navigate("edit", {trigger: true});
     },
     onList: function(){
-        var d = new Date(this.today.getFullYear(), this.today.getMonth(), 1),
-            url = _.str.sprintf("list/%d", d.getTime());
-
-        app.router.navigate(url, {trigger: true});
+        app.router.navigate("list", {trigger: true});
     }
 });
 
@@ -48,17 +43,17 @@ var ListView = Backbone.View.extend({
         "click .back": "onBack"
     },
     initialize: function(){
-        //_.bindAll(this);
+        _.bindAll(this);
+
         //listのDOM
         this.$list = $("#month-list tbody");
         //描画処理
         this.render();
     },
     render: function(){
-        this.this_month = new Date(this.date);
-        var d = new Date(this.date);
+        var d = this.this_month;
 
-        var day = this.this_month.getDate();
+        var day = d.getDate();
         while(d.getMonth() == this.this_month.getMonth()){
             this.addItemView(d);
             day++;
@@ -80,7 +75,7 @@ var ItemView = Backbone.View.extend({
         "click .edit": "onEdit"
     },
     initialize: function(){
-        //_.bindAll(this);
+        _.bindAll(this);
 
     },
     render: function(){
@@ -101,7 +96,7 @@ var EditView = Backbone.View.extend({
         "click .back": "onBack"
     },
     initialize: function(){
-        //_.bindAll(this);
+        _.bindAll(this);
 
         this.$date = $("#date");
     },
@@ -116,44 +111,3 @@ var EditView = Backbone.View.extend({
         app.router.navigate("", {trigger: true});
     }
 });
-
-
-//- router
-var AppRouter = Backbone.Router.extend({
-    routes: {
-        "": "main",
-        "list/:date": "list",
-        "edit/:date": "edit"
-    },
-    /**
-     * @event Router#initialize
-     */
-    initialize: function(){
-        this.today = new Date();
-
-        //View定義
-        this.mainView = new MainView({ el:$("#main") });
-        this.listView = new ListView({ el:$("#list") });
-        this.editView = new EditView({ el:$("#edit") });
-    },
-    main: function(){
-        this.listView.$el.hide();
-        this.editView.$el.hide();
-        this.mainView.$el.show();
-    },
-    list: function(){
-        this.editView.$el.hide();
-        this.mainView.$el.hide();
-        this.listView.$el.show();
-    },
-    edit: function(){
-        this.mainView.$el.hide();
-        this.listView.$el.hide();
-        this.editView.$el.show();
-    }
-});
-
-
-//エントリポイント
-app.router = new AppRouter();
-Backbone.history.start();

@@ -40,16 +40,16 @@
             <!-- Begin page content -->
             <div class="container">
 
-                <!-- top -->
-                <div class="panel panel-default">
+                <!-- main -->
+                <div class="panel panel-default" id="main">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3 text-left"></div>
                             <div class="col-xs-6 text-center">
-                                Today
+                                <span id="today"></span>
                             </div>
                             <div class="col-xs-3 text-right">
-                                <a href="#" class="pull-right">
+                                <a class="pull-right edit">
                                     勤怠修正
                                     <span class="glyphicon glyphicon-chevron-right"></span>
                                 </a>
@@ -77,21 +77,21 @@
                     <div class="panel-footer">
                         <div class="row">
                             <div class="col-xs-12 text-right">
-                                <button class="btn btn-default">
+                                <button class="btn btn-default list">
                                     <span class="glyphicon glyphicon-list"></span> 月間表示
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- /#top -->
+                <!-- /#main -->
 
                 <!-- list -->
-                <div class="panel panel-default table-responsive">
+                <div class="panel panel-default table-responsive" id="list">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3 text-left">
-                                <a href="#" class="pull-left">
+                                <a href="#" class="pull-left back">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                     戻る
                                 </a>
@@ -105,52 +105,34 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-xs-4 text-left">
-                                <a href="#" class="pull-left">
+                                <a href="#" class="pull-left prev">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
-                                    YYYY/MM
+                                    <span id="prev-month"></span>
                                 </a>
                             </div>
                             <div class="col-xs-4 text-center">
-                                YYYY/MM
+                                <span id="this-month"></span>
                             </div>
                             <div class="col-xs-4 text-right">
-                                <a href="#" class="pull-right">
-                                    YYYY/MM
+                                <a href="#" class="pull-right next">
+                                    <span id="next-month"></span>
                                     <span class="glyphicon glyphicon-chevron-right"></span>
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <table class="table">
+                    <table class="table" id="month-list">
                         <thead>
                             <tr>
                                 <th>day</th>
                                 <th>start</th>
                                 <th>end</th>
                                 <th>rest</th>
+                                <th>&nbsp;</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>09:00</td>
-                                <td>19:00</td>
-                                <td>1.0</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>09:00</td>
-                                <td>19:00</td>
-                                <td>1.0</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>09:00</td>
-                                <td>19:00</td>
-                                <td>1.0</td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
 
                     <div class="panel-footer">
@@ -168,24 +150,24 @@
                 <!-- /#list -->
 
                 <!-- edit -->
-                <div class="panel panel-default">
+                <div class="panel panel-default" id="edit">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3 text-left">
-                                <a href="#" class="pull-left">
+                                <a href="#" class="pull-left back">
                                     <span class="glyphicon glyphicon-chevron-left"></span>
                                     戻る
                                 </a>
                             </div>
                             <div class="col-xs-6 text-center">
-                                Edit
+                                <span id="date"></span>
                             </div>
                             <div class="col-xs-3 text-right"></div>
                         </div>
                     </div>
 
                     <div class="panel-body">
-                        <form action="" role="form">
+                        <form class="form" role="form" id="editForm">
                             <div class="form-group">
                                 <label for="txtStartTime">出勤時刻</label>
                                 <input type="text" class="form-control" id="txtStartTime" placeholder="HH:MM">
@@ -205,11 +187,11 @@
                         <div class="row">
                             <div class="col-xs-8"></div>
                             <div class="col-xs-4 text-right">
-                                <button class="btn btn-default">
+                                <button class="btn btn-default clear">
                                     <span class="glyphicon glyphicon-refresh"></span>
                                     Clear
                                 </button>
-                                <button class="btn btn-primary">
+                                <button class="btn btn-primary save">
                                     <span class="glyphicon glyphicon-floppy-save"></span>
                                     Save
                                 </button>
@@ -228,13 +210,26 @@
             </div>
         </div>
 
+        <script type="text/template" id="tmpl-itemview">
+            <tr>
+                <td><%= date %></td>
+                <td><%= start-time %></td>
+                <td><%= end-time %></td>
+                <td><%= rest-time %></td>
+                <td>
+                    <a href="#" class="pull-right edit">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </td>
+            </tr>
+        </script>
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="vendor/assets/components/jquery/jquery.min.js"></script>
-        <!--<script src="vendor/assets/components/json2/json2.js"></script>-->
         <script src="vendor/assets/components/underscore/underscore-min.js"></script>
+        <script src="vendor/assets/components/underscore.string/lib/underscore.string.js"></script>
         <script src="vendor/assets/components/backbone/backbone-min.js"></script>
         <script src="vendor/assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="js/app.js"></script>
