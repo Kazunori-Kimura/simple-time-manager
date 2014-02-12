@@ -14,10 +14,15 @@
 
         <!-- Begin page content -->
         <div class="container" id="app">
-            <div class="page-header"></div>
-            <ul id="tm-list"></ul>
+            <div class="row" id="today"></div>
+
+            <div class="row">
+                <div class="page-header" id="tm-list-header"></div>
+                <ul id="tm-list"></ul>
+            </div>
         </div>
 
+        <!-- include js Libraries -->
         <script src="vendor/assets/components/jquery/jquery.min.js"></script>
         <script src="vendor/assets/components/underscore/underscore-min.js"></script>
         <script src="vendor/assets/components/underscore.string/lib/underscore.string.js"></script>
@@ -27,7 +32,21 @@
         <script src="vendor/assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="js/app.js"></script>
 
+
         <!-- template -->
+
+        <script type="text/template" id="today-template">
+            <div class="page-header">
+                <h1><%- day %></h1>
+            </div>
+            <dl>
+                <dt>start</dt>
+                <dd><%- start %></dd>
+                <dt>end</dt>
+                <dd><%- end %></dd>
+            </dl>
+        </script>
+
         <script type="text/template" id="header-template">
             <h1><%- year %> / <%- month %></h1>
         </script>
@@ -41,6 +60,5 @@
                 <button class="item-del btn btn-min">Del</button>
             </div>
         </script>
-
     </body>
 </html>

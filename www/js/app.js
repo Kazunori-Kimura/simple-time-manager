@@ -29,6 +29,27 @@ $(function(){
     var Days = new DayList();
 
 
+
+    //TodayView
+    var TodayView = Backbone.View.extend({
+        //template
+        template: _.template($('#today-template').html()),
+
+        //初期化処理
+        initialize: function(){
+            //modelに変更があった場合は再描画
+            this.listenTo(this.model, "change", this.render);
+        },
+
+        //描画
+        render: function(){
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+
+    });
+
+
     //item view
     var ItemView = Backbone.View.extend({
         tagName : "li",
@@ -53,7 +74,7 @@ $(function(){
         el: $("#app"),
 
         //今日
-        today: new Date(),
+        today: 0,
         //当月
         currentDate: 0,
 
@@ -67,14 +88,21 @@ $(function(){
             this.listenTo(Days, 'reset', this.addAll);
             this.listenTo(Days, 'all', this.render);
 
+            //今日を取得
+            var d = new Date();
+            //trunc time
+            this.today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
             if(this.currentDate == 0){
                 this.currentDate = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
             }
 
             //header
-            this.$header = $(".page-header");
+            this.$header = $("#tm-list-header");
             //list
             this.$list = $("#tm-list");
+            //today
+            this.$today = $("#today");
 
             Days.fetch();
         },
@@ -90,7 +118,17 @@ $(function(){
             //リスト描画
             this.addAll();
 
+            //フォーム描画
+            this.showToday();
+
             return this;
+        },
+
+        //TodayView描画
+        showToday: function(){
+            var ds = Days.where({datetime: this.today.getTime()});
+            var view = new TodayView({model: ds[0]});
+            this.$today.html(view.render().el);
         },
 
         //1件描画
@@ -124,7 +162,5 @@ $(function(){
         }
     });
 
-    var _d = new Date();
-    var app = new AppView({currentDate: new Date(_d.getFullYear(), _d.getMonth(), 1)});
-
+    var app = new ListView();
 });
