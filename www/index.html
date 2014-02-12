@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -12,226 +11,36 @@
         <link href="css/sticky-footer-navbar.css" rel="stylesheet">
     </head>
     <body>
-        <!-- Wrap all page content here -->
-        <div id="wrap">
 
-            <!-- Fixed navbar -->
-            <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">TimeManager</a>
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-
-            <!-- Begin page content -->
-            <div class="container">
-
-                <!-- main -->
-                <div class="panel panel-default" id="main">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3 text-left"></div>
-                            <div class="col-xs-6 text-center">
-                                <span id="today"></span>
-                            </div>
-                            <div class="col-xs-3 text-right">
-                                <a class="pull-right edit">
-                                    勤怠修正
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-6 text-center">
-                                <button class="btn btn-success btn-lg">
-                                    <span class="glyphicon glyphicon-log-in"></span> 出勤
-                                </button>
-                                <p id="start-time" class="lead">--:--</p>
-                            </div>
-                            <div class="col-xs-6 text-center">
-                                <button class="btn btn-warning btn-lg">
-                                    <span class="glyphicon glyphicon-log-out"></span> 退勤
-                                </button>
-                                <p id="end-time" class="lead">--:--</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-xs-12 text-right">
-                                <button class="btn btn-default list">
-                                    <span class="glyphicon glyphicon-list"></span> 月間表示
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /#main -->
-
-                <!-- list -->
-                <div class="panel panel-default table-responsive" id="list">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3 text-left">
-                                <a href="#" class="pull-left back">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    戻る
-                                </a>
-                            </div>
-                            <div class="col-xs-6 text-center">
-                                月間表示
-                            </div>
-                            <div class="col-xs-3 text-right"></div>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-4 text-left">
-                                <a href="#" class="pull-left prev">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    <span id="prev-month"></span>
-                                </a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <span id="this-month"></span>
-                            </div>
-                            <div class="col-xs-4 text-right">
-                                <a href="#" class="pull-right next">
-                                    <span id="next-month"></span>
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <table class="table" id="month-list">
-                        <thead>
-                            <tr>
-                                <th>day</th>
-                                <th>start</th>
-                                <th>end</th>
-                                <th>rest</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-xs-8"></div>
-                            <div class="col-xs-4">
-                                <a class="btn btn-default pull-right">
-                                    <span class="glyphicon glyphicon-share"></span>
-                                    PDF出力
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /#list -->
-
-                <!-- edit -->
-                <div class="panel panel-default" id="edit">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3 text-left">
-                                <a href="#" class="pull-left back">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    戻る
-                                </a>
-                            </div>
-                            <div class="col-xs-6 text-center">
-                                <span id="date"></span>
-                            </div>
-                            <div class="col-xs-3 text-right"></div>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <form class="form" role="form" id="editForm">
-                            <div class="form-group">
-                                <label for="txtStartTime">出勤時刻</label>
-                                <input type="text" class="form-control" id="txtStartTime" placeholder="HH:MM">
-                            </div>
-                            <div class="form-group">
-                                <label for="txtEndTime">退勤時間</label>
-                                <input type="text" class="form-control" id="txtEndTime" placeholder="HH:MM">
-                            </div>
-                            <div class="form-group">
-                                <label for="txtRestTime">休憩時間</label>
-                                <input type="text" class="form-control" id="txtRestTime" placeholder="1.0">
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-xs-8"></div>
-                            <div class="col-xs-4 text-right">
-                                <button class="btn btn-default clear">
-                                    <span class="glyphicon glyphicon-refresh"></span>
-                                    Clear
-                                </button>
-                                <button class="btn btn-primary save">
-                                    <span class="glyphicon glyphicon-floppy-save"></span>
-                                    Save
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- #edit -->
-
-            </div>
+        <!-- Begin page content -->
+        <div class="container" id="app">
+            <div class="page-header"></div>
+            <ul id="tm-list"></ul>
         </div>
 
-        <div id="footer">
-            <div class="container">
-                <p class="text-muted">Place sticky footer content here.</p>
-            </div>
-        </div>
-
-        <script type="text/template" id="tmpl-itemview">
-            <tr>
-                <td><%= date %></td>
-                <td><%= start-time %></td>
-                <td><%= end-time %></td>
-                <td><%= rest-time %></td>
-                <td>
-                    <a href="#" class="pull-right edit">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </td>
-            </tr>
-        </script>
-
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
         <script src="vendor/assets/components/jquery/jquery.min.js"></script>
         <script src="vendor/assets/components/underscore/underscore-min.js"></script>
         <script src="vendor/assets/components/underscore.string/lib/underscore.string.js"></script>
         <script src="vendor/assets/components/backbone/backbone-min.js"></script>
+        <script src="vendor/assets/components/backbone.localStorage/backbone.localStorage-min.js"></script>
+        <script src="vendor/assets/components/Ractive/Ractive.js"></script>
         <script src="vendor/assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="js/app.js"></script>
+
+        <!-- template -->
+        <script type="text/template" id="header-template">
+            <h1><%- year %> / <%- month %></h1>
+        </script>
+
+        <script type="text/template" id="item-template">
+            <div class="tm-item">
+                <span><%- day %></span>
+                <input type="text" value="<%- start %>">
+                <input type="text" value="<%- end %>">
+                <input type="text" value="<%- rest %>">
+                <button class="item-del btn btn-min">Del</button>
+            </div>
+        </script>
+
     </body>
 </html>
