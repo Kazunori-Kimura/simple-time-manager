@@ -14,12 +14,28 @@
 
         <!-- Begin page content -->
         <div class="container" id="app">
+            <!-- TodayView -->
             <div class="row" id="today"></div>
 
+            <!-- ListView -->
             <div class="row">
                 <div class="page-header" id="tm-list-header"></div>
-                <ul id="tm-list"></ul>
+                <ul class="list-group" id="tm-list">
+                    <li class="list-group-item list-group-item-success">
+                        <div class="row">
+                            <div class="col-xs-2">日</div>
+                            <div class="col-xs-2">出勤</div>
+                            <div class="col-xs-2">退勤</div>
+                            <div class="col-xs-2">休憩(H)</div>
+                            <div class="col-xs-2">時間(H)</div>
+                            <div class="col-xs-2 text-right">編集</div>
+                        </div>
+                    </li>
+                </ul>
             </div>
+
+            <!-- EditView -->
+            <div class="row" id="tm-edit"></div>
         </div>
 
         <!-- include js Libraries -->
@@ -34,30 +50,61 @@
 
 
         <!-- template -->
-
+        <!-- TodayView template -->
         <script type="text/template" id="today-template">
             <div class="page-header">
+                <button class="item-edit btn btn-xs btn-link pull-right"><span class="glyphicon glyphicon-chevron-right"></span></button>
                 <h1><%- day %></h1>
             </div>
-            <dl>
-                <dt>start</dt>
-                <dd><%- start %></dd>
-                <dt>end</dt>
-                <dd><%- end %></dd>
-            </dl>
+            <div class="row">
+                <div class="col-xs-6 text-center"><button class="btn btn-info btn-lg btn-start">出勤</button></div>
+                <div class="col-xs-6 text-center"><button class="btn btn-warning btn-lg btn-end">退勤</button></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 text-center"><%- start %></div>
+                <div class="col-xs-6 text-center"><%- end %></div>
+            </div>
         </script>
 
+        <!-- ListView Header template -->
         <script type="text/template" id="header-template">
             <h1><%- year %> / <%- month %></h1>
         </script>
 
+        <!-- ItemView template -->
         <script type="text/template" id="item-template">
-            <div class="tm-item">
-                <span><%- day %></span>
-                <input type="text" value="<%- start %>">
-                <input type="text" value="<%- end %>">
-                <input type="text" value="<%- rest %>">
-                <button class="item-del btn btn-min">Del</button>
+            <div class="row">
+                <div class="col-xs-2"><%- day.slice(-2) %></div>
+                <div class="col-xs-2"><%- start %></div>
+                <div class="col-xs-2"><%- end %></div>
+                <div class="col-xs-2"><%- rest %></div>
+                <div class="col-xs-2"><%- worktime %></div>
+                <div class="col-xs-2">
+                    <button class="item-edit btn btn-xs btn-link pull-right">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                </div>
+            </div>
+        </script>
+
+        <!-- EditView template -->
+        <script type="text/template" id="edit-template">
+            <%- day %>
+            <div class="form-group">
+                <label for="inputStart" class="control-label">出勤</label>
+                <input type="time" class="form-control" id="inputStart" placeholder="HH:MM" value="<%- start %>">
+            </div>
+            <div class="form-group">
+                <label for="inputEnd" class="control-label">退勤</label>
+                    <input type="time" class="form-control" id="inputEnd" placeholder="HH:MM" value="<%- end %>">
+            </div>
+            <div class="form-group">
+                <label for="inputRest" class="control-label">休憩時間(H)</label>
+                <input type="number" class="form-control" id="inputRest" placeholder="Number" value="<%- rest %>">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-save">Save</button>
+                <button class="btn btn-warning btn-cancel">Cancel</button>
             </div>
         </script>
     </body>

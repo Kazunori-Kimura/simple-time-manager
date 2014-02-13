@@ -11,7 +11,8 @@ $(function(){
                 end_dt: 0,
                 start: "",
                 end: "",
-                rest: 0
+                rest: 0,
+                worktime: 0
             };
         }
     });
@@ -52,7 +53,8 @@ $(function(){
 
     //item view
     var ItemView = Backbone.View.extend({
-        tagName : "li",
+        tagName: "li",
+        className: "list-group-item",
 
         template: _.template($('#item-template').html()),
 
@@ -69,7 +71,27 @@ $(function(){
         }
     });
 
-    //list view
+    //edit view
+    var EditView = Backbone.View.extend({
+        tagName: "form",
+        className: "form-inline",
+
+        template: _.template($('#edit-template').html()),
+
+        //初期化処理
+        initialize: function(){
+            //modelに変更があった場合は再描画
+            this.listenTo(this.model, "change", this.render);
+        },
+
+        //描画
+        render: function(){
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
+
+    //list view (mainとなるview)
     var ListView = Backbone.View.extend({
         el: $("#app"),
 
@@ -103,6 +125,8 @@ $(function(){
             this.$list = $("#tm-list");
             //today
             this.$today = $("#today");
+            //edit
+            this.$edit = $("#tm-edit");
 
             Days.fetch();
         },
@@ -118,8 +142,9 @@ $(function(){
             //リスト描画
             this.addAll();
 
-            //フォーム描画
+            //SubView描画
             this.showToday();
+            this.showEdit();
 
             return this;
         },
@@ -129,6 +154,18 @@ $(function(){
             var ds = Days.where({datetime: this.today.getTime()});
             var view = new TodayView({model: ds[0]});
             this.$today.html(view.render().el);
+        },
+
+        //EditView描画
+        showEdit: function(day){
+            var model = day;
+            if(typeof day == "undefined"){
+                var ds = Days.where({datetime: this.today.getTime()});
+                model = ds[0];
+            }
+            
+            var view = new EditView({model: model});
+            this.$edit.html(view.render().el);
         },
 
         //1件描画
