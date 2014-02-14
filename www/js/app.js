@@ -58,6 +58,10 @@ $(function(){
 
         template: _.template($('#item-template').html()),
 
+        events: {
+            "click .item-edit": "showEdit"
+        },
+
         //初期化処理
         initialize: function(){
             //modelに変更があった場合は再描画
@@ -68,15 +72,25 @@ $(function(){
         render: function(){
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        showEdit: function(){
+            var $edit = $("#tm-edit");
+            var view = new EditView({model: this.model});
+            $edit.html(view.render().el);
         }
     });
 
     //edit view
     var EditView = Backbone.View.extend({
         tagName: "form",
-        className: "form-inline",
+        //className: "form-inline",
 
         template: _.template($('#edit-template').html()),
+
+        events: {
+            "click .btn-save": "update"
+        },
 
         //初期化処理
         initialize: function(){
@@ -88,6 +102,20 @@ $(function(){
         render: function(){
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        update: function(){
+            var st = $("#inputStart").val(),
+                et = $("#inputEnd").val(),
+                rt = $("#inputRest").val();
+
+            console.log("update: start='%s', end='%s', rest='%s'", st, et, rt);
+
+            this.model.save({
+                start: st,
+                end: et,
+                rest: rt
+            });
         }
     });
 
@@ -106,8 +134,6 @@ $(function(){
         //初期化処理
         initialize: function(){
             //collectionにeventをバインド
-            this.listenTo(Days, 'add', this.addOne);
-            this.listenTo(Days, 'reset', this.addAll);
             this.listenTo(Days, 'all', this.render);
 
             //今日を取得
@@ -129,6 +155,10 @@ $(function(){
             this.$edit = $("#tm-edit");
 
             Days.fetch();
+
+            //SubView描画
+            this.showToday();
+            this.showEdit();
         },
 
         //描画
@@ -141,10 +171,6 @@ $(function(){
 
             //リスト描画
             this.addAll();
-
-            //SubView描画
-            this.showToday();
-            this.showEdit();
 
             return this;
         },
@@ -179,6 +205,7 @@ $(function(){
             var cd = new Date(this.currentDate.getTime()), //clone date.
                 mon = this.currentDate.getMonth();
 
+            this.$list.html(""); //Listをリセット
             while(cd.getMonth() === mon){
                 //get model
                 var ds = Days.where({datetime: cd.getTime()});

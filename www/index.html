@@ -20,7 +20,7 @@
             <!-- ListView -->
             <div class="row">
                 <div class="page-header" id="tm-list-header"></div>
-                <ul class="list-group" id="tm-list">
+                <ul class="list-group">
                     <li class="list-group-item list-group-item-success">
                         <div class="row">
                             <div class="col-xs-2">日</div>
@@ -32,6 +32,7 @@
                         </div>
                     </li>
                 </ul>
+                <ul class="list-group" id="tm-list"></ul>
             </div>
 
             <!-- EditView -->
@@ -89,7 +90,9 @@
 
         <!-- EditView template -->
         <script type="text/template" id="edit-template">
-            <%- day %>
+            <div class="page-header">
+                <h1><%- day %></h1>
+            </div>
             <div class="form-group">
                 <label for="inputStart" class="control-label">出勤</label>
                 <input type="time" class="form-control" id="inputStart" placeholder="HH:MM" value="<%- start %>">
