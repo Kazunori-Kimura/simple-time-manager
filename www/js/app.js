@@ -127,9 +127,13 @@ $(function(){
         today: 0,
         //当月
         currentDate: 0,
-
         //ヘッダーtemplate
         headerTemplate: _.template($('#header-template').html()),
+
+        events: {
+            "click .prev-month": "prevMonth",
+            "click .next-month": "nextMonth"
+        },
 
         //初期化処理
         initialize: function(){
@@ -223,7 +227,24 @@ $(function(){
 
                 cd.setDate(cd.getDate()+1);
             } //end while
+        },
+
+        //前月
+        prevMonth: function(){
+            var d = this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+            this.currentDate = new Date(d);
+            //リスト更新
+            this.render();
+        },
+
+        //翌月
+        nextMonth: function(){
+            var d = this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+            this.currentDate = new Date(d);
+            //リスト更新
+            this.render();
         }
+
     });
 
     var app = new ListView();

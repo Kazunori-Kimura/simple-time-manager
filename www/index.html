@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sticky Footer Navbar Template for Bootstrap</title>
+        <title>Backbone.js sample</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/assets/components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -69,7 +69,13 @@
 
         <!-- ListView Header template -->
         <script type="text/template" id="header-template">
-            <h1><%- year %> / <%- month %></h1>
+            <button class="prev-month btn btn-xs btn-link pull-left">
+                <span class="glyphicon glyphicon-chevron-left"></span>prev
+            </button>
+            <button class="next-month btn btn-xs btn-link pull-right">
+                next<span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+            <h1 class="text-center"><%- year %> / <%- month %></h1>
         </script>
 
         <!-- ItemView template -->
